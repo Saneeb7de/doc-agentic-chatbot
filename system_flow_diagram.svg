@@ -1,0 +1,193 @@
+<svg viewBox="0 0 1200 1400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="1400" fill="#f8fafc"/>
+  
+  <!-- Title -->
+  <text x="600" y="40" text-anchor="middle" class="title" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1e293b">System Data &amp; Control Flow</text>
+  
+  <!-- Swimlane Headers -->
+  <rect x="50" y="70" width="250" height="50" fill="#3b82f6" stroke="#1e40af" stroke-width="2"/>
+  <text x="175" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">User / Streamlit UI</text>
+  
+  <rect x="300" y="70" width="250" height="50" fill="#10b981" stroke="#059669" stroke-width="2"/>
+  <text x="425" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">FastAPI Backend<tspan x="425" dy="15">(Main Thread)</tspan></text>
+  
+  <rect x="550" y="70" width="250" height="50" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+  <text x="675" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">FastAPI Backend<tspan x="675" dy="15">(Background Task)</tspan></text>
+  
+  <rect x="800" y="70" width="250" height="50" fill="#8b5cf6" stroke="#7c3aed" stroke-width="2"/>
+  <text x="925" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">ChromaDB</text>
+  
+  <!-- Swimlane Dividers -->
+  <line x1="50" y1="120" x2="50" y2="1350" stroke="#e2e8f0" stroke-width="2"/>
+  <line x1="300" y1="120" x2="300" y2="1350" stroke="#e2e8f0" stroke-width="2"/>
+  <line x1="550" y1="120" x2="550" y2="1350" stroke="#e2e8f0" stroke-width="2"/>
+  <line x1="800" y1="120" x2="800" y2="1350" stroke="#e2e8f0" stroke-width="2"/>
+  <line x1="1050" y1="120" x2="1050" y2="1350" stroke="#e2e8f0" stroke-width="2"/>
+  
+  <!-- Part 1 Header -->
+  <rect x="60" y="140" width="980" height="35" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="550" y="162" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#dc2626">Part 1: Document Upload Flow</text>
+  
+  <!-- Step 1 -->
+  <rect x="70" y="190" width="200" height="40" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="5"/>
+  <text x="170" y="215" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#1e40af">1. User uploads document.pdf</text>
+  
+  <!-- Arrow 1->2 -->
+  <path d="M 270 210 L 320 210" stroke="#374151" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 2 -->
+  <rect x="320" y="190" width="200" height="40" fill="#d1fae5" stroke="#10b981" stroke-width="2" rx="5"/>
+  <text x="420" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#059669">2. POST /upload request</text>
+  <text x="420" y="225" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#059669">with file data</text>
+  
+  <!-- Arrow 2->3 -->
+  <path d="M 320 250 L 270 250" stroke="#374151" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 3 -->
+  <rect x="70" y="260" width="200" height="40" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="5"/>
+  <text x="170" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#1e40af">3. 200 OK response instantly</text>
+  
+  <!-- Arrow 3->4 -->
+  <path d="M 520 210 L 570 210" stroke="#374151" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 4 -->
+  <rect x="570" y="190" width="200" height="40" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="5"/>
+  <text x="670" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#d97706">4. Spawn background task</text>
+  
+  <!-- Step 5 - Polling loop -->
+  <rect x="70" y="320" width="200" height="40" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="5"/>
+  <text x="170" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#1e40af">5. Start polling GET /status</text>
+  
+  <!-- Polling loop arrow -->
+  <path d="M 270 340 L 320 340 L 320 370 L 270 370" stroke="#374151" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="295" y="360" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#374151">Loop</text>
+  
+  <!-- Step 6 -->
+  <rect x="570" y="320" width="200" height="40" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="5"/>
+  <text x="670" y="335" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#d97706">6. IngestionAgent parses</text>
+  <text x="670" y="350" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#d97706">&amp; chunks document</text>
+  
+  <!-- Arrow 6->7 -->
+  <path d="M 770 340 L 820 340" stroke="#374151" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 7 -->
+  <rect x="820" y="320" width="200" height="40" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2" rx="5"/>
+  <text x="920" y="335" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#7c3aed">7. Add Chunks &amp;</text>
+  <text x="920" y="350" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#7c3aed">Embeddings</text>
+  
+  <!-- Step 8 -->
+  <rect x="570" y="390" width="200" height="40" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="5"/>
+  <text x="670" y="405" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#d97706">8. Update session status</text>
+  <text x="670" y="420" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#d97706">to "ready"</text>
+  
+  <!-- Step 9 -->
+  <rect x="70" y="450" width="200" height="40" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="5"/>
+  <text x="170" y="465" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1e40af">9. Next GET /status poll</text>
+  <text x="170" y="480" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1e40af">receives "ready"</text>
+  
+  <!-- Part 2 Header -->
+  <rect x="60" y="520" width="980" height="35" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+  <text x="550" y="542" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#10b981">Part 2: Query &amp; Response Flow</text>
+  
+  <!-- Step 1 of Part 2 -->
+  <rect x="70" y="570" width="200" height="40" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="5"/>
+  <text x="170" y="585" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1e40af">1. User types question</text>
+  <text x="170" y="600" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1e40af">&amp; presses Enter</text>
+  
+  <!-- Arrow 1->2 Part 2 -->
+  <path d="M 270 590 L 320 590" stroke="#374151" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 2 of Part 2 -->
+  <rect x="320" y="570" width="200" height="40" fill="#d1fae5" stroke="#10b981" stroke-width="2" rx="5"/>
+  <text x="420" y="585" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#059669">2. POST /query request</text>
+  <text x="420" y="600" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#059669">with question &amp; history</text>
+  
+  <!-- Step 3 of Part 2 -->
+  <rect x="320" y="630" width="200" height="40" fill="#d1fae5" stroke="#10b981" stroke-width="2" rx="5"/>
+  <text x="420" y="655" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#059669">3. ConversationalAgent</text>
+  <text x="420" y="670" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#059669">triggered</text>
+  
+  <!-- Arrow 3->4 Part 2 -->
+  <path d="M 520 650 L 820 650" stroke="#374151" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 4 of Part 2 -->
+  <rect x="820" y="630" width="200" height="40" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2" rx="5"/>
+  <text x="920" y="645" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#7c3aed">4. Similarity Search</text>
+  <text x="920" y="660" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#7c3aed">for relevant chunks</text>
+  
+  <!-- Arrow 4->5 Part 2 -->
+  <path d="M 820 690 L 520 690" stroke="#374151" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 5 of Part 2 -->
+  <rect x="320" y="700" width="200" height="40" fill="#d1fae5" stroke="#10b981" stroke-width="2" rx="5"/>
+  <text x="420" y="715" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#059669">5. Receive relevant</text>
+  <text x="420" y="730" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#059669">chunks</text>
+  
+  <!-- Step 6 of Part 2 -->
+  <rect x="320" y="760" width="200" height="40" fill="#d1fae5" stroke="#10b981" stroke-width="2" rx="5"/>
+  <text x="420" y="775" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#059669">6. API call to Gemini</text>
+  <text x="420" y="790" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#059669">with chunks &amp; question</text>
+  
+  <!-- Arrow 6->7 Part 2 -->
+  <path d="M 320 820 L 270 820" stroke="#374151" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 7 of Part 2 -->
+  <rect x="70" y="810" width="200" height="40" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="5"/>
+  <text x="170" y="825" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1e40af">7. StreamingResponse</text>
+  <text x="170" y="840" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1e40af">token by token</text>
+  
+  <!-- Step 8 of Part 2 -->
+  <rect x="320" y="870" width="200" height="40" fill="#d1fae5" stroke="#10b981" stroke-width="2" rx="5"/>
+  <text x="420" y="885" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#059669">8. Save used context</text>
+  <text x="420" y="900" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#059669">to session variable</text>
+  
+  <!-- Arrow 8->9 Part 2 -->
+  <path d="M 270 950 L 320 950" stroke="#374151" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 9 of Part 2 -->
+  <rect x="70" y="930" width="200" height="40" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="5"/>
+  <text x="170" y="945" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1e40af">9. GET /context request</text>
+  <text x="170" y="960" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1e40af">to fetch source chunks</text>
+  
+  <!-- Arrow 9->10 Part 2 -->
+  <path d="M 320 980 L 270 980" stroke="#374151" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 10 of Part 2 -->
+  <rect x="70" y="990" width="200" height="40" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="5"/>
+  <text x="170" y="1005" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1e40af">10. Context displayed</text>
+  <text x="170" y="1020" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#1e40af">in UI expander</text>
+  
+  <!-- Legend -->
+  <rect x="60" y="1100" width="980" height="200" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" rx="10"/>
+  <text x="550" y="1125" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#374151">Legend &amp; Message Flow</text>
+  
+  <!-- Legend Items -->
+  <rect x="80" y="1140" width="20" height="20" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+  <text x="110" y="1155" font-family="Arial, sans-serif" font-size="12" fill="#374151">User Interface Actions</text>
+  
+  <rect x="80" y="1170" width="20" height="20" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+  <text x="110" y="1185" font-family="Arial, sans-serif" font-size="12" fill="#374151">FastAPI Main Thread Operations</text>
+  
+  <rect x="300" y="1140" width="20" height="20" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+  <text x="330" y="1155" font-family="Arial, sans-serif" font-size="12" fill="#374151">Background Task Processing</text>
+  
+  <rect x="300" y="1170" width="20" height="20" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="330" y="1185" font-family="Arial, sans-serif" font-size="12" fill="#374151">ChromaDB Database Operations</text>
+  
+  <line x1="550" y1="1155" x2="590" y2="1155" stroke="#374151" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="600" y="1160" font-family="Arial, sans-serif" font-size="12" fill="#374151">Message/Data Flow Direction</text>
+  
+  <!-- Key Process Notes -->
+  <text x="80" y="1220" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#374151">Key Process Notes:</text>
+  <text x="80" y="1240" font-family="Arial, sans-serif" font-size="11" fill="#374151">• Upload returns immediately while processing happens in background</text>
+  <text x="80" y="1255" font-family="Arial, sans-serif" font-size="11" fill="#374151">• UI polls status until document is ready for querying</text>
+  <text x="80" y="1270" font-family="Arial, sans-serif" font-size="11" fill="#374151">• Query responses stream in real-time with context fetched separately</text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#374151"/>
+    </marker>
+  </defs>
+</svg>
