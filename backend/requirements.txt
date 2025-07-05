@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+python-multipart
+langchain
+langchain-google-genai
+google-generativeai
+faiss-cpu
+pypdf
+python-docx
+python-pptx
+pandas
+lxml
+chromadb
+langchain-chroma
